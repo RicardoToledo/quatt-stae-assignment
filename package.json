@@ -1,0 +1,29 @@
+{
+  "name": "quatt-stae-assignment",
+  "version": "1.0.0",
+  "description": "Assignment for the Senior Test Automation Engineer role at Quatt",
+  "scripts": {
+    "test": "npx playwright test --project=chromium --headed",
+    "test:debug": "npx playwright test --debug",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RicardoToledo/quatt-stae-assignment.git"
+  },
+  "author": "Ricardo Toledo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RicardoToledo/quatt-stae-assignment/issues"
+  },
+  "homepage": "https://github.com/RicardoToledo/quatt-stae-assignment#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.13.10",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
+    "eslint": "^9.22.0",
+    "eslint-plugin-playwright": "^2.2.0",
+    "typescript": "^5.8.2"
+  }
+}
