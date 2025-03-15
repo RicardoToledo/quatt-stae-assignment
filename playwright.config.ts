@@ -10,7 +10,7 @@ export default defineConfig({
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
-  /* Retry failed tests 2 times on CI, 0 times locally */
+  /* Retry failed tests 2 times on CI, 1 times locally */
   retries: process.env.CI ? 2 : 1,
   /* Opt out of parallel tests on CI, default is undefined. */
   workers: process.env.CI ? 1 : undefined,

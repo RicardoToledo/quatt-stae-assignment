@@ -81,5 +81,5 @@ export const samsungGalaxyS6: ProductInfo = {
 export const nokiaLumia1520: ProductInfo = {
     name: 'Nokia lumia 1520',
     price: 820,
-    description: 'Nokia lumia 1520'
+    description: 'Product descriptionThe Nokia Lumia 1520 is powered by 2.2GHz quad-core Qualcomm Snapdragon 800 processor and it comes with 2GB of RAM.'
 }; 

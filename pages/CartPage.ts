@@ -8,7 +8,7 @@ import { extractNumber } from '../utils/textUtils';
 export class CartPage {
     // Cart page elements
     readonly productsTable: Locator;
-    readonly totalPrice: Locator;
+    readonly totalAmount: Locator;
     readonly placeOrderButton: Locator;
 
     // Place Order modal elements
@@ -32,7 +32,7 @@ export class CartPage {
     constructor(private readonly page: Page) {
         // Initialize cart elements
         this.productsTable = page.getByRole('table');
-        this.totalPrice = page.locator('#totalp');
+        this.totalAmount = page.locator('#totalp');
         this.placeOrderButton = page.getByRole('button', { name: 'Place Order' });
 
         // Initialize place order modal elements
@@ -68,12 +68,11 @@ export class CartPage {
      * @returns The calculated total price
      */
     async calculateTableTotal(): Promise<number> {
-        let total = 0;
         const rows = await this.productsTable.getByRole('row').all();
+        let total = 0;
         // Skip header row
-        for (let i = 1; i < rows.length; i++) {
-            const priceCell = rows[i].locator('td').nth(2);
-            const priceText = await priceCell.textContent() || '0';
+        for (const row of rows.slice(1)) {
+            const priceText = await row.locator('td').nth(2).textContent() || '0';
             total += extractNumber(priceText);
         }
         return total;
@@ -84,7 +83,7 @@ export class CartPage {
      * @returns The displayed total price
      */
     async getCartDisplayedTotal(): Promise<number> {
-        return parseInt(await this.totalPrice.textContent() || '0');
+        return parseInt(await this.totalAmount.textContent() || '0');
     }
 
     /**
@@ -117,5 +116,15 @@ export class CartPage {
             name: orderText.match(/Name: ([^\n]+?)(?=\s*Date:)/)?.[1] || '',
             date: orderText.match(/Date: ([^\n]+)/)?.[1] || ''
         };
+    }
+
+    /**
+     * Remove an item from the cart by product name
+     * @param productName - The name of the product to remove
+     */
+    async removeItemByName(productName: string): Promise<void> {
+        const row = this.getProductRow(productName);
+        const deleteButton = row.getByRole('link', { name: 'Delete' });
+        await deleteButton.click();
     }
 } 

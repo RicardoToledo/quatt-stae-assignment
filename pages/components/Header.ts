@@ -7,10 +7,12 @@ export class Header {
     readonly cartLink: Locator;
     readonly loginLink: Locator;
     readonly signupLink: Locator;
+    readonly homeLink: Locator;
 
     constructor(page: Page) {
         this.cartLink = page.getByRole('link', { name: 'Cart', exact: true });
         this.loginLink = page.getByRole('link', { name: 'Log in', exact: true });
         this.signupLink = page.getByRole('link', { name: 'Sign up', exact: true });
+        this.homeLink = page.getByRole('link', { name: 'Home'});
     }
 } 
