@@ -4,8 +4,13 @@
   "description": "Assignment for the Senior Test Automation Engineer role at Quatt",
   "scripts": {
     "test": "npx playwright test --project=chromium --headed",
-    "test:debug": "npx playwright test --debug",
-    "lint": "eslint . --ext .ts,.tsx"
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "lint": "eslint . --ext .ts,.tsx",
+    "report": "playwright show-report"
   },
   "repository": {
     "type": "git",
@@ -24,6 +29,7 @@
     "@typescript-eslint/parser": "^8.26.1",
     "eslint": "^9.22.0",
     "eslint-plugin-playwright": "^2.2.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "dotenv": "^16.4.7"
   }
 }
