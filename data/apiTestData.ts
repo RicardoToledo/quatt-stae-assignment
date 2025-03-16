@@ -44,7 +44,7 @@ export const updatedUserData: Partial<ApiUser> = {
 /**
  * Invalid user data with missing required fields
  */
-export const invalidUserData: Partial<ApiUser> = {
+export const incompleteUserData: Partial<ApiUser> = {
     name: 'Invalid User'
     // Missing required fields: email, gender, status
 };
