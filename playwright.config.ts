@@ -19,9 +19,9 @@ export default defineConfig({
     ['html', { outputFolder: 'test-results' }]
   ],
   use: {
+    headless: process.env.CI ? true : false,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: process.env.BASE_URL || 'https://www.demoblaze.com',
-    headless: false,
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
     // screenshot: 'only-on-failure',
@@ -29,7 +29,7 @@ export default defineConfig({
     // trace: 'on-first-retry',
     launchOptions: {
       /* Slow down Playwright operations by the specified amount of milliseconds. */
-      // slowMo: 1000
+      // slowMo: 2000
     }
   },
 
@@ -62,6 +62,6 @@ export default defineConfig({
     {
       name: 'Google Chrome',
       use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    },
+    }
   ]
 });

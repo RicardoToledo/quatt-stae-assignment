@@ -1,6 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import { PaymentInfo } from '../data/testData';
 import { extractNumber } from '../utils/textUtils';
+import { WEB_ELEMENTS_TEXT } from '../constants/websiteTexts';
 
 /**
  * Page object for the shopping cart page including order modals
@@ -13,6 +14,7 @@ export class CartPage {
 
     // Place Order modal elements
     readonly placeOrderModal: {
+        container: Locator;
         nameInput: Locator;
         countryInput: Locator;
         cityInput: Locator;
@@ -25,7 +27,7 @@ export class CartPage {
     // Order confirmation modal elements
     readonly confirmationModal: {
         container: Locator;
-        title: Locator;
+        orderConfirmedTitle: Locator;
         orderDetails: Locator;
     };
 
@@ -33,23 +35,27 @@ export class CartPage {
         // Initialize cart elements
         this.productsTable = page.getByRole('table');
         this.totalAmount = page.locator('#totalp');
-        this.placeOrderButton = page.getByRole('button', { name: 'Place Order' });
+        this.placeOrderButton = page.getByRole('button', { name: WEB_ELEMENTS_TEXT.CART.BUTTONS.PLACE_ORDER });
 
         // Initialize place order modal elements
         this.placeOrderModal = {
+            container: page.getByRole('dialog', { name: WEB_ELEMENTS_TEXT.CART.BUTTONS.PLACE_ORDER }),
             nameInput: page.getByRole('textbox', { name: 'Name:' }),
             countryInput: page.getByRole('textbox', { name: 'Country:' }),
             cityInput: page.getByRole('textbox', { name: 'City:' }),
             cardInput: page.getByRole('textbox', { name: 'Credit card:' }),
             monthInput: page.getByRole('textbox', { name: 'Month:' }),
             yearInput: page.getByRole('textbox', { name: 'Year:' }),
-            purchaseButton: page.getByRole('button', { name: 'Purchase' })
+            purchaseButton: page.getByRole('button', { name: WEB_ELEMENTS_TEXT.CART.BUTTONS.PURCHASE })
         };
 
         // Initialize confirmation modal elements
         this.confirmationModal = {
             container: page.locator('div.sweet-alert'),
-            title: page.getByRole('heading', { name: 'Thank you for your purchase!', level: 2 }),
+            orderConfirmedTitle: page.getByRole('heading', {
+                name: WEB_ELEMENTS_TEXT.CART.MODALS.ORDER_CONFIRMATION.TITLE,
+                level: 2
+            }),
             orderDetails: page.locator('div.sweet-alert p')
         };
     }

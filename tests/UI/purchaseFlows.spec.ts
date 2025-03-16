@@ -1,10 +1,12 @@
 import { test, expect } from '../../fixtures/testFixture';
-import { samsungGalaxyS6, nokiaLumia1520, validPayment } from '../../data/testData';
+import { samsungGalaxyS6, nokiaLumia1520, validPayment, invalidPayment } from '../../data/testData';
 
 // UI Assignment: Automate the Product Purchase Flow
 test.describe('Purchase Flow Tests', () => {
 
-    test('UI-001: Complete purchase flow with valid payment for single product', async ({ homePage, productPage, cartPage, header }) => {
+    test('UI-001: Complete purchase flow with valid payment for single product', {
+        tag: ['@ui', '@positive', '@regression', '@smoke', '@purchase']
+    }, async ({ homePage, productPage, cartPage, header }) => {
         // Click on product by name
         await homePage.clickProductByName(samsungGalaxyS6.name);
 
@@ -36,7 +38,7 @@ test.describe('Purchase Flow Tests', () => {
 
         // Verify order success and details
         await expect(cartPage.confirmationModal.container).toBeVisible();
-        await expect(cartPage.confirmationModal.title).toBeVisible();
+        await expect(cartPage.confirmationModal.orderConfirmedTitle).toBeVisible();
         const orderDetails = await cartPage.getOrderDetails();
         expect(orderDetails.amount).toBe(expectedTotal);
         expect(orderDetails.cardNumber).toBe(validPayment.card);
@@ -45,7 +47,9 @@ test.describe('Purchase Flow Tests', () => {
         // ! BUG: Date's month is not displaying correctly
     });
 
-    test('UI-002: Complete purchase flow with valid payment for multiple products', async ({ homePage, productPage, cartPage, header }) => {
+    test('UI-002: Complete purchase flow with valid payment for multiple products', {
+        tag: ['@ui', '@positive', '@purchase']
+    }, async ({ homePage, productPage, cartPage, header }) => {
         // Add two products to cart
         await homePage.addMultipleProductsToCart(
             [samsungGalaxyS6, nokiaLumia1520],
@@ -72,14 +76,16 @@ test.describe('Purchase Flow Tests', () => {
 
         // Verify order success and details
         await expect(cartPage.confirmationModal.container).toBeVisible();
-        await expect(cartPage.confirmationModal.title).toBeVisible();
+        await expect(cartPage.confirmationModal.orderConfirmedTitle).toBeVisible();
         const orderDetails = await cartPage.getOrderDetails();
         expect(orderDetails.amount).toBe(expectedTotal);
         expect(orderDetails.cardNumber).toBe(validPayment.card);
         expect(orderDetails.name).toBe(validPayment.name);
     });
 
-    test('UI-003: Remove items from cart and verify cart and total updates', async ({ homePage, productPage, cartPage, header }) => {
+    test('UI-003: Remove item from cart and verify cart and total updates', {
+        tag: ['@ui', '@positive', '@regression', '@smoke', '@cart']
+    }, async ({ homePage, productPage, cartPage, header }) => {
         // Add two products to cart
         await homePage.addMultipleProductsToCart(
             [samsungGalaxyS6, nokiaLumia1520],
@@ -111,6 +117,64 @@ test.describe('Purchase Flow Tests', () => {
         const updatedDisplayedTotal = await cartPage.getCartDisplayedTotal();
         expect(updatedTableTotal).toBe(updatedExpectedTotal);
         expect(updatedDisplayedTotal).toBe(updatedExpectedTotal);
+    });
+
+    test.fail('UI-004: Prevent purchase attempt with empty shopping cart', {
+        tag: ['@ui', '@negative', '@cart']
+    }, async ({ cartPage, header }) => {
+        await header.cartLink.click();
+
+        // Verify cart is empty
+        // Only header row is visible
+        await expect(cartPage.productsTable.getByRole('row')).toHaveCount(1);
+        // Total amount is empty
+        await expect(cartPage.totalAmount).toBeEmpty();
+
+        // Attempt purchase with empty cart
+        await cartPage.placeOrderButton.click();
+        await cartPage.fillPaymentForm(validPayment);
+        await cartPage.placeOrderModal.purchaseButton.click();
+
+        // ! BUG: order can be made with no items in cart
+        // Verify purchase was not successful
+        await expect(cartPage.confirmationModal.orderConfirmedTitle).toBeHidden();
+    });
+
+    test.fail('UI-005: Prevent purchase completion with invalid payment details', {
+        tag: ['@ui', '@negative', '@regression', '@payment']
+    }, async ({ homePage, productPage, cartPage, header }) => {
+        // Add product to cart
+        await homePage.clickProductByName(samsungGalaxyS6.name);
+        await productPage.addToCart();
+
+        // Go to cart and start checkout
+        await header.cartLink.click();
+        await cartPage.placeOrderButton.click();
+
+        // Attempt purchase with invalid payment
+        await cartPage.fillPaymentForm(invalidPayment);
+        await cartPage.placeOrderModal.purchaseButton.click();
+
+        // ! BUG: order can be made with invalid payment
+        // Verify purchase was not successful
+        await expect(cartPage.confirmationModal.orderConfirmedTitle).toBeHidden();
+    });
+
+    test('UI-006: Verify purchase can not be made with empty payment form', {
+        tag: ['@ui', '@negative', '@payment']
+    }, async ({ homePage, productPage, cartPage, header }) => {
+        // Add product to cart
+        await homePage.clickProductByName(samsungGalaxyS6.name);
+        await productPage.addToCart();
+
+        // Go to cart and start checkout
+        await header.cartLink.click();
+        await cartPage.placeOrderButton.click();
+
+        // Attempt purchase without filling payment form and verify no order is made
+        await expect(cartPage.placeOrderModal.container).toBeVisible();
+        await cartPage.placeOrderModal.purchaseButton.click();
+        await expect(cartPage.confirmationModal.container).toBeHidden();
     });
 
 });
