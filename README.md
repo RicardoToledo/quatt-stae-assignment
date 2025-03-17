@@ -161,6 +161,11 @@ npm run test:tag "@negative"
 npm run test:tag "@api @positive @integration"
 ```
 
+<h4 align="left">UI and API tests execution</h4>
+<p align="left">
+   <img width="700" alt="UI and API tests execution" src="https://github.com/user-attachments/assets/dffa1992-2187-4e36-be81-d9aa16dffc3c">
+</p>
+
 ### View Test Report
 
 Playwright generates an HTML report after each test execution. You can view the report by opening the `test-results/index.html` file in your browser or by running:
