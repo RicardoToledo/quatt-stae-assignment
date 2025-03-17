@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node.js-%3E%3D22.13.10-brightgreen.svg)](https://nodejs.org/)
 [![Playwright](https://img.shields.io/badge/playwright-tested-brightgreen.svg)](https://playwright.dev/)
+[![GitHub Actions](https://github.com/RicardoToledo/quatt-stae-assignment/actions/workflows/playwright.yml/badge.svg)](https://github.com/RicardoToledo/quatt-stae-assignment/actions)
 
 This test automation framework provides comprehensive testing capabilities for both UI and API testing of the following applications:
 
@@ -86,8 +87,8 @@ For detailed information about all test cases, please see the [TEST-CASES.md](./
 
 ## Prerequisites
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
+- Node.js (v22.13.10 or higher)
+- npm (v10 or higher)
 - GoRest API token (free account required for API tests)
 
 For API tests, set up your GoRest API token:
@@ -100,35 +101,37 @@ For API tests, set up your GoRest API token:
 API_TOKEN=your_gorest_api_token_here
 ```
 
-> Make sure you have these prerequisites installed before proceeding with the project setup and running.
+> **Important**: Make sure you have these prerequisites installed before proceeding with the project setup and running.
 
 ## Installation
 
-1. **Clone the repository:**
+Run the following commands in your terminal to set up the project:
 
 ```bash
+# 1. Clone the repository
 git clone https://github.com/RicardoToledo/quatt-stae-assignment.git
+
+# 2. Navigate to project directory
 cd quatt-stae-assignment
-```
 
-2. **Install dependencies:**
-
-```bash
+# 3. Install project dependencies
 npm install
+
+# 4. Install Playwright browsers
 npx playwright install
 ```
 
 ## Running Tests
 
-The test suite can be executed using any of the `npm` scripts listed below. Simply run one of the following commands in your terminal:
+The test suite can be executed using any of the `npm` scripts listed below. Simply run one of the following `npm` commands in your terminal:
 
 ```bash
-npm run <command>
+npm run <npm_script>
 ```
 
 ### Available Test Commands
 
-| Command         | Description                     | Example Command                     |
+| NPM Scripts     | Description                     | Example Command                     |
 | --------------- | ------------------------------- | ----------------------------------- |
 | `test`          | Runs all tests using Playwright | `npm test`                          |
 | `test:tag`      | Runs tests with specific tags   | `npm run test:tag "@api @positive"` |
