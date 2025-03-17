@@ -176,8 +176,7 @@ npm run test:report
 
 ## Continuous Integration with GitHub Actions
 
-This project includes GitHub Actions workflows for continuous integration, automatically running tests on code changes.
-
+This project includes a [GitHub Actions workflow](https://github.com/RicardoToledo/quatt-stae-assignment/actions) for continuous integration, automatically running tests on code changes.
 The workflow is configured to:
 
 1. Run on push to main/master branches and pull requests
@@ -186,6 +185,10 @@ The workflow is configured to:
 4. Update the existing .env file with values from GitHub Secrets
 5. Run all tests (both UI and API) using Chromium browser
 6. Upload test reports as artifacts
+
+> You can view the complete workflow configuration in [.github/workflows/playwright.yml](.github/workflows/playwright.yml).
+
+<img width="600" alt="ci" src="https://github.com/user-attachments/assets/c0827de5-75c1-4c54-a34f-089299107ae3" />
 
 ## Possible Improvements
 
