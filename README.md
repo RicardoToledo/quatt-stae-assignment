@@ -174,6 +174,19 @@ Playwright generates an HTML report after each test execution. You can view the 
 npm run test:report
 ```
 
+## Continuous Integration with GitHub Actions
+
+This project includes GitHub Actions workflows for continuous integration, automatically running tests on code changes.
+
+The workflow is configured to:
+
+1. Run on push to main/master branches and pull requests
+2. Set up the Node.js environment
+3. Install dependencies and Playwright browsers (Chromium only)
+4. Update the existing .env file with values from GitHub Secrets
+5. Run all tests (both UI and API) using Chromium browser
+6. Upload test reports as artifacts
+
 ## Possible Improvements
 
 - **Data Factory**: Implement robust data factories using Faker.js for more relevant random test data
