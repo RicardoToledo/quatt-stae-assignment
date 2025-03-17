@@ -35,10 +35,10 @@ export default defineConfig({
 
   /* Configure projects for common browsers */
   projects: [
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },

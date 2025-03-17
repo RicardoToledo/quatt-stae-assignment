@@ -10,7 +10,9 @@
     "test:firefox": "npx playwright test --project=firefox",
     "test:safari": "npx playwright test --project=webkit",
     "test:mobile": "npx playwright test --project='Mobile Chrome'",
+    "test:chromium": "npx playwright test --project=chromium",
     "test:api": "npx playwright test tests/API/",
+    "test:ui": "npx playwright test tests/UI/",
     "lint": "eslint . --ext .ts,.tsx",
     "debug": "playwright test --debug"
   },

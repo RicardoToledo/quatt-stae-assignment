@@ -17,7 +17,9 @@ test.describe('User API Negative Tests', () => {
         tag: ['@api', '@negative', '@regression', '@create']
     }, async ({ apiClient }) => {
         // Attempt to create a user with missing required fields
+        
         // Type assertion 'as any' bypasses TypeScript's type checking to intentionally send invalid data for negative testing
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const createInvalidUserResponse = await apiClient.createUser(incompleteUserData as any);
 
         // Verify the response
