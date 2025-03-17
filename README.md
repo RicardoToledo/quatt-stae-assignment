@@ -107,8 +107,8 @@ API_TOKEN=your_gorest_api_token_here
 1. **Clone the repository:**
 
 ```bash
-git clone url_here
-cd dir_here
+git clone https://github.com/RicardoToledo/quatt-stae-assignment.git
+cd quatt-stae-assignment
 ```
 
 2. **Install dependencies:**
